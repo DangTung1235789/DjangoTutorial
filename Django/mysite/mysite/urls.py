@@ -20,8 +20,16 @@ from users import views as user_views
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework import routers
+from movies.views import MoviedataViewSet, ActionMoviesViewSet, ComedyMoviesViewSet
+
+routers = routers.SimpleRouter()    
+routers.register('movies', MoviedataViewSet, basename='movies')
+routers.register('action', ActionMoviesViewSet, basename='action')
+routers.register('comedy', ComedyMoviesViewSet, basename='comedy') 
 
 urlpatterns = [
+    path('', include(routers.urls)),
     path('admin/', admin.site.urls),
     path('food/', include('food.urls')),
     path('register/', user_views.register, name='register'),
